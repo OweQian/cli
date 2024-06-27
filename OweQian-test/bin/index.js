@@ -1,34 +1,70 @@
 #!/usr/bin/env node
 
-const lib = require("oweqian-test-lib");
+const yargs = require("yargs/yargs");
+const dedent = require("dedent");
 
-// 注册一个命令 oweqian-test init
+const { hideBin } = require("yargs/helpers");
 
-const argv = require("process").argv;
+const arg = hideBin(process.argv);
+const cli = yargs(arg);
+cli
+  .usage("Usage: oweqian-test [command] <options>")
+  .demandCommand(
+    1,
+    "A command is required. Pass --help to see all available commands and options"
+  )
+  .strict()
+  .recommendCommands()
+  .fail((err, msg) => {
+    console.log(err);
+  })
+  .alias("h", "help")
+  .alias("v", "version")
+  .wrap(cli.terminalWidth())
+  .epilogue(
+    dedent`Leading and trailing lines will be trimmed, so you can write something like
+  this and have it work as you expect:
 
-const command = argv[2];
+    * how convenient it is
+    * that I can use an indented list
+       - and still have it do the right thing
 
-const options = argv.slice(3);
-
-if (options.length > 1) {
-  let [option, param] = options;
-  option = option.replace("--", "");
-
-  if (command) {
-    if (lib[command]) {
-      lib[command]({ option, param });
-    } else {
-      console.log("无效的命令");
+  That's all.`
+  )
+  .options({
+    debug: {
+      type: "boolean",
+      describe: "Bootstrap debug mode",
+      alias: "d",
+    },
+  })
+  .option("registry", {
+    type: "string",
+    describe: "Define global registry",
+    alias: "r",
+  })
+  .group(["debug"], "Dev Options:")
+  .group(["registry"], "Extra Options:")
+  .command(
+    "init [name]",
+    "Do init a project",
+    (yargs) => {
+      yargs.option("name", {
+        type: "string",
+        describe: "Name of a project",
+        alias: "n",
+      });
+    },
+    (argv) => {
+      console.log(argv);
     }
-  } else {
-    console.log("请输入命令");
-  }
-}
-
-// 实现参数解析 --version 和 init --name
-if (command.startsWith("--") || command.startsWith("-")) {
-  const globalOption = command.replace(/--|-/g, "");
-  if (globalOption === "version" || globalOption === "V") {
-    console.log("1.0.0");
-  }
-}
+  )
+  .command({
+    command: "list",
+    aliases: ["ls", "la", "ll"],
+    describe: "List local packages",
+    builder: (yargs) => {},
+    handler: (argv) => {
+      console.log(argv);
+    },
+  }).argv;
