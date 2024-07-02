@@ -26,5 +26,8 @@
     "@oweqian/lerna-test-b": "^0.0.0",
     "yargs": "^17.7.2"
   },
-  "type": "module"
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  }
 }

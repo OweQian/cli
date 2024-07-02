@@ -15,5 +15,8 @@
   ],
   "scripts": {
     "test": "node ./__tests__/b.test.js"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
