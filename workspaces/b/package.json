@@ -1,11 +1,17 @@
 {
-  "name": "b",
+  "name": "@oweqian/test-b",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ora": "^8.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

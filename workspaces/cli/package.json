@@ -1,5 +1,5 @@
 {
-  "name": "@oweqiantestgroup/test-cli",
+  "name": "@oweqian/test-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@oweqiantestgroup/test-a": "^1.0.0"
+    "@oweqian/test-a": "^1.0.0",
+    "@oweqian/test-b": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
